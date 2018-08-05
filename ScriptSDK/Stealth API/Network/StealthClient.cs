@@ -233,13 +233,13 @@ namespace StealthAPI
 
         private T WaitReply<T>(PacketType type)
         {
-            while (_replyes.Count == 0)
-                Thread.Sleep(10);
-
             Packet packet;
             ushort replyMethod;
             do
             {
+				while (_replyes.Count == 0)
+					Thread.Sleep(10);
+			
                 packet = _replyes.Dequeue();
                 replyMethod = BitConverter.ToUInt16(packet.Data, 0);
             } while (replyMethod != (ushort)type);
